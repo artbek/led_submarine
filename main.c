@@ -134,6 +134,9 @@ int __attribute__((noreturn)) main(void)
 	TCCR0B |= (1 << CS00);
 	TIMSK0 |= (1 << TOIE0);
 	TCNT0 = 0;
+
+	GIMSK |= 0b00100000;
+	PCMSK |= 0b00010000;
 	sei();
 
 
@@ -272,3 +275,9 @@ ISR(TIM0_OVF_vect)
 {
 	counter_sleep--;
 }
+
+ISR(PCINT0_vect)
+{
+	reset_counter_sleep();
+}
+
